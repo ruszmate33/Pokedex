@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> {
+public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> implements Filterable {
     public static class PokedexViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout containerView;
         public TextView textView;
@@ -49,10 +51,26 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
                 }
             });
         }
+
+        private class PokemonFilter extends Filter {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                // implement your search here!
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+            }
+        }
     }
 
     private List<Pokemon> pokemon = new ArrayList<>();
     private RequestQueue requestQueue;
+
+    @Override
+    public Filter getFilter() {
+        return new PokemonFilter();
+    }
 
     PokedexAdapter(Context context) {
         requestQueue = Volley.newRequestQueue(context);
